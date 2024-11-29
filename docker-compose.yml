@@ -1,0 +1,13 @@
+services:
+  mysql:
+    container_name: 'spring-mysql'
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=tp-spring'
+      - 'MYSQL_PASSWORD=password'
+      - 'MYSQL_ROOT_PASSWORD=admin'
+      - 'MYSQL_USER=spring_user'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
