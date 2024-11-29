@@ -9,5 +9,5 @@ services:
       - 'MYSQL_USER=spring_user'
     ports:
       - '3306:3306'
-    volumes:
-      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+#    volumes:
+#      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
