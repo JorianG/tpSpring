@@ -46,9 +46,10 @@ public class PostReactionService {
         return reactionRepository.save(reaction);
     }
 
-    public void removeReaction(UUID postId, String username) {
+    public boolean removeReaction(UUID postId, String username) {
         PostReactionId id = new PostReactionId(postId, username);
         reactionRepository.deleteById(id);
+        return reactionRepository.existsById(id);
     }
 
     public List<PostReaction> getPostReactions(UUID postId) {

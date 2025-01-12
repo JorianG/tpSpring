@@ -21,7 +21,6 @@ public class PostService implements PostServiceInterface {
     public Post createPost(Post post, String username) {
         User user = userService.readUser(username);
         post.setUser(user);
-
         return postRepository.save(post);
     }
 

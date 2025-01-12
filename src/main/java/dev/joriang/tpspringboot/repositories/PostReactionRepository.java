@@ -10,7 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PostReactionRepository extends JpaRepository<PostReaction, PostReactionId> {
+public interface PostReactionRepository extends     JpaRepository<PostReaction, PostReactionId> {
     List<PostReaction> findByPostId(UUID postId);
     Optional<PostReaction> findByPostIdAndUserUsername(UUID postId, String username);
+    void deleteByPostId(UUID postId);
 }

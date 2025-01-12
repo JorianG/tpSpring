@@ -1,12 +1,6 @@
 # IUT Informatique R5.A05 - Spring
 
 ## TODO
-- [ ] Ajout classes pour les Request Body voir photo tel
-- [ ] delete cascade sur post avec les avis
-- [ ] delete cascade sur user avec les posts
-- [ ] tag db ready
-- [ ]
-
 
 ## Contexte fonctionnel des TP Spring
 

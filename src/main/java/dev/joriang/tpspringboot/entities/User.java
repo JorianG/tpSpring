@@ -21,7 +21,7 @@ import java.util.Set;
 @Table(name = "user")
 @Getter
 @Setter
-public class User {
+public class    User {
 
     @Id
     @Column(name = "username", nullable = false)
@@ -48,6 +48,9 @@ public class User {
     @Column(name = "updated_on")
     @UpdateTimestamp
     private Date updatedOn;
+
+    @Transient
+    private String rawPassword;
 
     @Override
     public final boolean equals(Object o) {

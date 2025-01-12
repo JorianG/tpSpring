@@ -4,42 +4,46 @@ import dev.joriang.tpspringboot.entities.PostReaction;
 import dev.joriang.tpspringboot.services.PostReactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 import java.util.UUID;
 
-@Controller
-@RequestMapping("/posts/{postId}/reactions")
+@RestController
+@RequestMapping("/reactions")
 public class PostReactionController {
     @Autowired
     private PostReactionService reactionService;
 
-    @PostMapping("/user/{username}/like")
+    @PostMapping("/posts/{postId}/user/{username}/like")
+    @PreAuthorize("hasRole('PUBLISHER') or hasRole('MODERATOR')")
     public ResponseEntity<PostReaction> likePost(
             @PathVariable UUID postId,
             @PathVariable String username) {
         return ResponseEntity.ok(reactionService.reactToPost(postId, username, true));
     }
 
-    @PostMapping("/user/{username}/dislike")
+    @PostMapping("/posts/{postId}/user/{username}/dislike")
+    @PreAuthorize("hasRole('PUBLISHER') or hasRole('MODERATOR')")
     public ResponseEntity<PostReaction> dislikePost(
             @PathVariable UUID postId,
             @PathVariable String username) {
         return ResponseEntity.ok(reactionService.reactToPost(postId, username, false));
     }
 
-    @DeleteMapping("/user/{username}")
-    public ResponseEntity<Void> removeReaction(
+    @DeleteMapping("/posts/{postId}/user/{username}")
+    @PreAuthorize("hasRole('PUBLISHER') or hasRole('MODERATOR')")
+    public ResponseEntity<List<PostReaction>> removeReaction(
             @PathVariable UUID postId,
             @PathVariable String username) {
         reactionService.removeReaction(postId, username);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(reactionService.getPostReactions(postId));
     }
 
-    @GetMapping
-    public @ResponseBody ResponseEntity<List<PostReaction>> getPostReactions(
+    @GetMapping("/posts/{postId}")
+    @PreAuthorize("hasRole('PUBLISHER') or hasRole('MODERATOR') or isAnonymous()")
+    public ResponseEntity<List<PostReaction>> getPostReactions(
             @PathVariable UUID postId) {
         return ResponseEntity.ok(reactionService.getPostReactions(postId));
     }
